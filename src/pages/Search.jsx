@@ -39,14 +39,14 @@ const Search = () => {
       }
       if (!advancesearch) {
         axios
-          .get(`https://api.consumet.org/meta/anilist/${search}`)
+          .get(`http://localhost:3000/api/search/${search}`)
           .then((response) => {
             console.log(response);
-            setAnime(response.data.results);
+            setAnime(response.data);
             setLoading(false);
           });
       }
-    }, 800);
+    }, 1000);
 
     return () => clearTimeout(getData);
   }, [search]);
@@ -142,6 +142,7 @@ const Search = () => {
       return updatedQuery;
     });
   }, [genre]);
+
   return (
     <div className={`absolute top-0 left-0 w-full bg-black z-50 h-screen`}>
       <div className="p-5">

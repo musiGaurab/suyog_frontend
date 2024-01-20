@@ -24,3 +24,5 @@ gb.txt
 *.sw?
 
 note.txt
+
+node_modules

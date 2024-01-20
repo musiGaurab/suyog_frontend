@@ -4,11 +4,23 @@ import notfound from "../assets/not.png";
 import { BsFillPlayCircleFill, BsPlusCircleFill } from "react-icons/bs";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const SearchCard = ({ data, load }) => {
   const navigate = useNavigate();
   // console.log(data);
-  const AnimeDetails = (id) => {
-    navigate(`/details/${id}`);
+  const AnimeDetails = (id, description, coverPage, downloadLinks) => {
+    const allDetails = {
+      title: id,
+      desc: description,
+      image: coverPage,
+      download: downloadLinks,
+    };
+    console.log(allDetails);
+    navigate(`/details/${id}`, {
+      state: {
+        details: allDetails,
+      },
+    });
   };
   return (
     <>
@@ -17,25 +29,7 @@ const SearchCard = ({ data, load }) => {
           <Skeleton />
         ) : data ? (
           data.map((dat, i) => {
-            const {
-              slug,
-              bannerImage,
-              countryOfOrigin,
-              coverImage,
-              currentEpisode,
-              duration,
-              format,
-              image,
-              season,
-              totalEpisodes,
-              releaseDate,
-              id,
-              status,
-              year,
-              title,
-              type,
-              genres,
-            } = dat;
+            const { coverPage, title, description, downloadLinks } = dat;
             return (
               <>
                 <div
@@ -44,24 +38,26 @@ const SearchCard = ({ data, load }) => {
                 >
                   <div
                     className="w-full h-[60%] relative cursor-pointer img overflow-hidden"
-                    onClick={() => AnimeDetails(id)}
+                    onClick={() =>
+                      AnimeDetails(title, description, coverPage, downloadLinks)
+                    }
                   >
                     <img
                       className="object-cover object-center w-full h-full rounded-md image"
-                      src={image}
-                      alt={slug}
+                      src={coverPage}
+                      alt={title}
                     />
                     <BsFillPlayCircleFill className="text-4xl absolute top-[50%] left-[40%] show z-20" />
                     <div className="flex gap-2 items-center absolute bottom-0 left-1 z-20">
-                      <p className="md:px-3 p-2 py-1 rounded-lg md:text-[10px] text-[7px] bg-red-700">
+                      {/* <p className="md:px-3 p-2 py-1 rounded-lg md:text-[10px] text-[7px] bg-red-700">
                         {type}
                       </p>
                       {/* <p className="px-2 py-1 border rounded-lg md:text-[10px] text-[7px]">
                         {format}
                       </p> */}
-                      <p className="hidden md:flex px-2 py-1 border rounded-lg md:text-[10px] text-[7px]">
+                      {/* <p className="hidden md:flex px-2 py-1 border rounded-lg md:text-[10px] text-[7px]">
                         {duration}m
-                      </p>
+                      </p>{" "} */}
                     </div>
                     <div
                       className="w-screen h-[250px] absolute bottom-0"
@@ -75,11 +71,17 @@ const SearchCard = ({ data, load }) => {
                   <div className="w-full flex flex-col gap-2 h-[30%] p-2 bg-blue-800 radius">
                     <div>
                       <h1 className="truncate font-bold lg:text-[15px] text-[12px]">
-                        {title.english}
+                        {title}
                       </h1>
                     </div>
                     <div className="flex items-end gap-2">
-                      <p className="px-2 py-1 border rounded-md md:text-[11px] text-[5px]">
+                      <p className="p-1 text-gray-300 text-[12px]">
+                        {description
+                          ? description.slice(0, 45)
+                          : `${title}Lorem ipsum dolor sit amet`}
+                        ...
+                      </p>
+                      {/* <p className="px-2 py-1 border rounded-md md:text-[11px] text-[5px]">
                         {status}
                       </p>
                       <p className="px-2 py-1 border rounded-md md:text-[11px] text-[5px]">
@@ -88,17 +90,22 @@ const SearchCard = ({ data, load }) => {
 
                       <p className="hidden md:flex px-3 py-1 border rounded-md md:text-[11px] text-[5px]">
                         Ep{totalEpisodes}
-                      </p>
+                      </p> */}
                     </div>
                     <div className="flex items-center  gap-1 text-[13px] truncate relative">
-                      <p className="text-yellow-500 text-[10px] md:text-[15px]">
+                      <NavLink to={downloadLinks.DOWNLOADNOW} target="_blank">
+                        <p className="cursor-pointer text-[12px] md:text-[15px] text-white p-2 rounded-md bg-red-500">
+                          Download
+                        </p>
+                      </NavLink>
+                      {/* <p className="text-yellow-500 text-[10px] md:text-[15px]">
                         {genres[0]}, {genres[1]}
-                      </p>
+                      </p> */}
                     </div>
-                    <BsPlusCircleFill
+                    {/* <BsPlusCircleFill
                       title="Add to list"
                       className="cursor-pointer lg:text-3xl text-red-400 text-xl"
-                    />
+                    /> */}
                   </div>
                 </div>
               </>

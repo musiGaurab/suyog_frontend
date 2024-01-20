@@ -20,7 +20,7 @@ import "swiper/css";
 import { AiFillPlayCircle, AiOutlinePlus } from "react-icons/ai";
 import Nav from "./Nav";
 import Recent from "./Recent";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Home = () => {
   const [data, setData] = useState([]);
   const [id, setId] = useState([]);
@@ -30,11 +30,9 @@ const Home = () => {
   const [expanded, setExpanded] = useState(false);
   useEffect(() => {
     const ApiCall = async () => {
-      const resq = await axios.get(
-        "https://api.consumet.org/meta/anilist/popular?perPage=7"
-      );
-      // console.log(resq);
-      setData(resq.data.results);
+      const resq = await axios.get("http://localhost:3000/api/latest");
+      console.log(resq);
+      setData(resq.data);
     };
     ApiCall();
   }, []);
@@ -75,26 +73,7 @@ const Home = () => {
             <div className="h-screen w-screen relative">
               {data &&
                 data.map((dat, i) => {
-                  const {
-                    image,
-                    averageScore,
-                    bannerImage,
-                    coverImage,
-                    countyOfOrigin,
-                    currentEpisode,
-                    description,
-                    genre,
-                    id,
-                    next,
-                    season,
-                    slug,
-                    status,
-                    title,
-                    synonyms,
-                    year,
-                    duration,
-                    format,
-                  } = dat;
+                  const { coverPage, description, title } = dat;
 
                   return (
                     <SwiperSlide key={id}>
@@ -111,9 +90,9 @@ const Home = () => {
                         <div className="flex flex-col md:gap-5 gap-5 md:leading-6 z-50 p-5">
                           <span>#{i + 1} Spotlight</span>
                           <h1 className="lg:text-4xl text-3xl md:leading-10 md:w-[50%] w-[100%]  h-[10vh] font-bold">
-                            {title.english.length > titles
-                              ? title.english.slice(0, titles) + "..."
-                              : title.english}
+                            {title.length > titles
+                              ? title.slice(0, titles) + "..."
+                              : title}
                           </h1>
 
                           <div className="md:flex gap-4 lg:mt-2 items-center hidden">
@@ -123,8 +102,8 @@ const Home = () => {
                             </p>
                             <p className="pl-1 pr-1 border rounded-sm">DUB</p>
                             <p className="pl-1 pr-1 rounded-sm border">SUB</p>
-                            <p>{format}</p>
-                            <p>{duration}m</p>
+                            {/* <p>{format}</p>
+                            <p>{duration}m</p> */}
                           </div>
                           {/* <p className="w-[80%]">{`${description}`}</p> */}
                           <p className="md:w-[45%] hidden md:flex">
@@ -135,12 +114,13 @@ const Home = () => {
                           </p>
                           {/* <p>Next episode on : {formatNextEpisode(next)}</p> */}
                           <div className="flex items-center gap-5">
-                            <button
-                              onClick={() => HandleWatch(id)}
+                            <Link
+                              // onClick={() => HandleWatch(id)}
+                              to={dat?.downloadLinks.PIXELDRAIN}
                               className="bg-yellow-400 p-2 rounded-md flex items-center gap-1 text-black"
                             >
-                              <AiFillPlayCircle size={20} /> Watch now
-                            </button>
+                              <AiFillPlayCircle size={20} /> Download
+                            </Link>
                             <button className="border flex items-center gap-1 p-2 rounded-md">
                               <AiOutlinePlus />
                               Add to list
@@ -151,8 +131,8 @@ const Home = () => {
                           <div className="absolute w-[100%] md:w-[60%] top-0 right-0 ">
                             <img
                               className="h-screen w-full object-center object-cover"
-                              src={coverImage ? coverImage : image}
-                              alt={slug}
+                              src={coverPage}
+                              alt="image"
                             />
                           </div>
                           <div className="small absolute top-0 left-0 w-full h-full md:w-[15%] md:left-[32%] border-2"></div>
@@ -191,7 +171,7 @@ const Home = () => {
         </div>
       </div>
       <Recent />
-      <Popular />
+      {/* <Popular /> */}
     </>
   );
 };

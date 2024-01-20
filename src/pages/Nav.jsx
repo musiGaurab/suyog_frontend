@@ -37,19 +37,19 @@ const Nav = () => {
   };
   // axios.defaults.withCredentials = true;
 
-  useEffect(() => {
-    const CheckUser = async () => {
-      const resq = await axios.get(
-        "http://127.0.0.1:4000/api/v1/user/details",
+  // useEffect(() => {
+  //   const CheckUser = async () => {
+  //     const resq = await axios.get(
+  //       "http://127.0.0.1:4000/api/v1/user/details",
 
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(resq);
-    };
-    CheckUser();
-  }, []);
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     console.log(resq);
+  //   };
+  //   CheckUser();
+  // }, []);
   return (
     <>
       <div
@@ -61,7 +61,7 @@ const Nav = () => {
           <NavLink className="relative z-20" to="/">
             {/* <img className="w-[0px]" src={logo} alt="logo" /> */}
             <h1 className="text-[20px] sm:text-3xl text-4xl flex gap-0 items-center text-red-500 tracking-widest z-20 font-bold capitalize cur">
-              NEPANIMIX
+              NEPCoMiC
               <span className="text-red-500"></span>
             </h1>
           </NavLink>
@@ -93,14 +93,14 @@ const Nav = () => {
                 Search <BiSearch size={20} />
               </NavLink>
             ) : null}
-            <NavLink className="p-2" to="/new-season">
-              New season
+            <NavLink className="p-2" to="/marvel">
+              Marvel comic
             </NavLink>
-            <NavLink className="p-2" to="/popular">
-              Popular
+            <NavLink className="p-2" to="/vertigo">
+              Vertigo
             </NavLink>
-            <NavLink className="p-2" to="/top-airing">
-              Top-airing
+            <NavLink className="p-2" to="/wildstorm">
+              Wildstorm
             </NavLink>
             <NavLink className="p-2" to="/scedule">
               Schedule

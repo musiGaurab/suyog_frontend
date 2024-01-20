@@ -16,6 +16,9 @@ import Schedule from "./pages/Schedule";
 import { Scedule } from "./pages/context/Scedule";
 import { Auth } from "./pages/auth/authContext";
 import { AddReact } from "./pages/context/React";
+import Marvel from "./pages/Marvel";
+import Vertigo from "./pages/Vertigo";
+import Wildstrom from "./pages/Wildstrom";
 
 function App() {
   return (
@@ -36,6 +39,9 @@ function App() {
                       <Route path="/genre/:id" element={<Genre />} />
                       <Route path="/watch/:id" element={<Watch />} />
                       <Route path="/scedule" element={<Schedule />} />
+                      <Route path="/marvel" element={<Marvel />} />
+                      <Route path="/vertigo" element={<Vertigo />} />
+                      <Route path="/wildstorm" element={<Wildstrom />} />
                     </Routes>
                     {/* <Popular /> */}
                   </BrowserRouter>
